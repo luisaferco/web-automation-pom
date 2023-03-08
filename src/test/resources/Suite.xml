@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Training web Test Suite">
+    <listeners>
+        <listener class-name="co.com.training.web.tests.MyCoolListener"/>
+    </listeners>
     <test name="My First Test">
         <groups>
             <run>

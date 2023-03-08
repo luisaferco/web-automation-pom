@@ -2,7 +2,7 @@ package co.com.training.web.tests;
 
 import org.testng.annotations.*;
 
-public class FilteringOptionsTests {
+public class FilteringOptionsTests extends BaseTest{
 
     @BeforeTest
     public void before() {

@@ -1,5 +1,6 @@
 package co.com.training.web.tests;
 
+import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -7,7 +8,7 @@ import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
 
-public class RegistrationLoginTests {
+public class RegistrationLoginTests extends BaseTest{
 
     @BeforeClass
     public void selectRegistrationLogin() {
@@ -34,11 +35,13 @@ public class RegistrationLoginTests {
     @Test(dataProvider = "login", groups = {"loginGroup"})
     public void failedUserNameRegistration(String userName, String password) {
         System.out.println("user is: "+ userName+ " and " + password);
+        Assert.assertEquals(password,"1234ABC");
+
     }
 
     @Test(dataProvider = "login", groups = {"loginGroup"})
     public void failedPasswordRegistration(String userName, String pass) {
         System.out.println("user is: "+ userName+ " and " + pass);
-
+        Assert.assertEquals(userName,"Pepito");
     }
 }
