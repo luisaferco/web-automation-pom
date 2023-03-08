@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Training web Test Suite">
+    <test name="My First Test">
+        <groups>
+            <run>
+                <include name="mainGroup"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="co.com.training.web.tests.FilteringOptionsTests"/>
+        </classes>
+    </test>
+    <test name="My Registration Test">
+        <parameter name="dataWrongUserName" value="badUser123"/>
+        <parameter name="dataWrongPassword" value="badPassword123"/>
+        <parameter name="userName" value="Pepito"/>
+        <parameter name="password" value="1234ABC"/>
+        <classes>
+            <class name="co.com.training.web.tests.RegistrationLoginTests"/>
+        </classes>
+    </test>
+</suite> <!-- Suite -->
