@@ -1,5 +1,8 @@
 package co.com.training.web.tests;
 
+import co.com.training.web.pageobject.LoginPage;
+import co.com.training.web.pageobject.NavigationPage;
+import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -7,7 +10,10 @@ import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
 
-public class RegistrationLoginTests {
+/**
+ * Test class is to show how we can work with @DataProvider annotation using ITestContext
+ */
+public class RegistrationLoginTests extends BaseTest{
 
     @BeforeClass
     public void selectRegistrationLogin() {
@@ -33,12 +39,22 @@ public class RegistrationLoginTests {
 
     @Test(dataProvider = "login", groups = {"loginGroup"})
     public void failedUserNameRegistration(String userName, String password) {
-        System.out.println("user is: "+ userName+ " and " + password);
+        NavigationPage navigationPage = getNavigationPage();
+        navigationPage.slightScroll();
+        LoginPage loginPage = navigationPage.navigateToRegistration();
+        loginPage.loginWith(userName, password);
+        Assert.assertEquals(loginPage.getAlertMessage(),"Username or password is incorrect");
+
     }
 
     @Test(dataProvider = "login", groups = {"loginGroup"})
-    public void failedPasswordRegistration(String userName, String pass) {
-        System.out.println("user is: "+ userName+ " and " + pass);
-
+    public void failedPasswordRegistration(String userName, String password) {
+        NavigationPage navigationPage = getNavigationPage();
+        navigationPage.slightScroll();
+        LoginPage loginPage = navigationPage.navigateToRegistration();
+        loginPage.loginWith(userName, password);
+        Assert.assertEquals(loginPage.getAlertMessage(),"Username or password is incorrect");
     }
+
+
 }
