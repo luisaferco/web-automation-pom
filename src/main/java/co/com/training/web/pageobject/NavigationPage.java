@@ -1,16 +1,17 @@
 package co.com.training.web.pageobject;
 
-import co.com.training.web.exceptions.NotFoundOptionException;
+import co.com.training.web.config.custom.CustomConditions;
 import co.com.training.web.utils.NavigationOptions;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class NavigationPage extends BasePage<WebDriver> {
+
+    @FindBy(className = "h20")
+    private WebElement headerNavOptions;
 
     @FindBy(css = "div.row.price_table_holder.col_3 a")
     private List<WebElement> navigationOptions;
@@ -18,26 +19,22 @@ public class NavigationPage extends BasePage<WebDriver> {
     @FindBy(id = "dismiss-button")
     private WebElement closeButton;
 
-    @FindBy(css = "iframe[title=Advertisement]")
-    private List<WebElement> window;
+    @FindBy(tagName = "iframe")
+    private List<WebElement> frames;
+
+    private String titlePage;
 
     public NavigationPage(WebDriver driver) {
         super(driver);
-       // driver.manage().window().maximize();
-        driver.get("https://www.globalsqa.com/angularjs-protractor-practice-site/");
     }
 
-    public NavigationPage refresh() {
-        driver.get("https://www.globalsqa.com/angularjs-protractor-practice-site/");
-        return this;
-    }
 
     public void navigateTo(String option) {
-        WebElement navOption = navigationOptions.stream().filter(item -> item.getText().equals(option))
-                .findFirst()
-                .orElseThrow(() -> new NotFoundOptionException(option));
+        scrollTo(headerNavOptions);
+        this.titlePage = driver.getTitle();
+        WebElement navOption = wait.until(CustomConditions.itemIsIncludedIn(navigationOptions, option));
         this.click(navOption);
-        closeAlertWindow();
+        closeVignetteWindow();
     }
 
     public LoginPage navigateToRegistration(){
@@ -46,22 +43,32 @@ public class NavigationPage extends BasePage<WebDriver> {
     }
 
     public TablePage navigateToSearchFilter(){
-        navigateTo(NavigationOptions.FILTERING.getOption());
+        navigateTo(NavigationOptions.SEARCH_FILTER.getOption());
         return new TablePage(getDriver());
     }
 
-    public void slightScroll() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,350)", "");
+    public void closeVignetteWindow() {
+        if (isVignettePresent()){
+            wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.tagName("iframe"),1));
+            switchToFrame("aswift_1");
+            switchToFrame("ad_iframe");
+            this.click(closeButton);
+            }
     }
 
-    public void closeAlertWindow() {
-        for(WebElement webElement : window) {
-           if (webElement.isDisplayed()) {
-               this.getIFrame(webElement);
-               this.click(closeButton);
-               break;
-           }
+    private boolean isVignettePresent() {
+        boolean isWindowPresent = false;
+        try {
+           wait.until(ExpectedConditions.urlContains("#google_vignette"));
+           isWindowPresent = true;
+        }catch (TimeoutException e){
+           isWindowPresent = false;
         }
+        return isWindowPresent;
+    }
+
+    public String getTitlePage() {
+        wait.until(ExpectedConditions.not(ExpectedConditions.titleContains(titlePage)));
+        return driver.getTitle();
     }
 }
