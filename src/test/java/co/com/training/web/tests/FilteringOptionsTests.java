@@ -5,8 +5,13 @@ import co.com.training.web.pageobject.TablePage;
 import co.com.training.web.utils.NavigationOptions;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import static java.lang.String.format;
 
 public class FilteringOptionsTests extends BaseTest{
 
@@ -28,22 +33,35 @@ public class FilteringOptionsTests extends BaseTest{
     @DataProvider(name = "dataFilteringOptions")
     public static Object[] dataProvider() {
         return Arrays.stream(NavigationOptions.values())
-                .map(NavigationOptions::getOption)
                 .toArray();
     }
 
-    @Test(dataProvider = "dataFilteringOptions", groups = {"mainGroup", "filteringGroup"})
-    public void filterBy(String option) {
-        NavigationPage navigationPage = getNavigationPage();
-        navigationPage.slightScroll();
-        navigationPage.navigateTo(option);
+    @DataProvider (name = "dataFilterTable")
+    public Object[][] dpMethod(){
+        return new Object[][] {{"Cash","EXPENDITURE"}};
     }
 
-    @Test(groups = {"filteringGroup"})
-    public void navigateToTable() {
+    @Test(dataProvider = "dataFilteringOptions", groups = {"mainGroup", "filteringGroup"})
+    public void filterBy(NavigationOptions option) {
         NavigationPage navigationPage = getNavigationPage();
-        navigationPage.slightScroll();
+        navigationPage.navigateTo(option.getOption());
+       Assert.assertEquals(navigationPage.getTitlePage(),option.getTitlePage());
+    }
+
+    @Test(dataProvider = "dataFilterTable", groups = {"filteringGroup"})
+    public void navigateToTableAndSearchBy(String account, String type) {
+        NavigationPage navigationPage = getNavigationPage();
         TablePage tablePage = navigationPage.navigateToSearchFilter();
-        Assert.assertTrue(tablePage.getTitle().contains("SearchFilter"), "Expected navigate to Search filter page but is " + tablePage.getTitle());
+        List<Map<String, String>> searchResults = tablePage.searchByAccount(account)
+                                                            .searchByType(type)
+                                                            .getSearchResults();
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(searchResults.stream().allMatch(row -> row.get("Type").equals(type)),
+                format("Expected all search results filtered by type \"%s\" ",type));
+
+        softAssert.assertTrue(searchResults.stream().allMatch(row -> row.get("Account").equals(account)),
+                format("Expected all search results filtered by type \"%s\" ", account));
+
+        softAssert.assertAll();
     }
 }
