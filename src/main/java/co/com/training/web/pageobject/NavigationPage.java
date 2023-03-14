@@ -31,7 +31,7 @@ public class NavigationPage extends BasePage<WebDriver> {
 
     public void navigateTo(String option) {
         scrollTo(headerNavOptions);
-        this.titlePage = driver.getTitle();
+        this.titlePage = getTitlePage();
         WebElement navOption = wait.until(CustomConditions.itemIsIncludedIn(navigationOptions, option));
         this.click(navOption);
         closeVignetteWindow();
@@ -67,8 +67,8 @@ public class NavigationPage extends BasePage<WebDriver> {
         return isWindowPresent;
     }
 
-    public String getTitlePage() {
+    public String getTitle() {
         wait.until(ExpectedConditions.not(ExpectedConditions.titleContains(titlePage)));
-        return driver.getTitle();
+        return getTitlePage();
     }
 }
