@@ -1,5 +1,6 @@
 package co.com.training.web.pageobject;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -27,7 +28,7 @@ public abstract class BasePage <T extends WebDriver> {
 
     public void dispose() {
         if(driver != null){
-            driver.quit();
+            driver.close();
         }
     }
 
@@ -46,7 +47,16 @@ public abstract class BasePage <T extends WebDriver> {
         element.sendKeys(text);
     }
 
-    public void getIFrame(WebElement element) {
-        driver.switchTo().frame(element);
+    public void scrollTo(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
+    }
+
+    public void switchToFrame(WebElement webElement) {
+        driver.switchTo().frame(webElement);
+    }
+
+    public void switchToFrame(String name) {
+        driver.switchTo().frame(name);
     }
 }
