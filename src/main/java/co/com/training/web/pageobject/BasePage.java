@@ -13,22 +13,22 @@ import static org.openqa.selenium.support.PageFactory.initElements;
 public abstract class BasePage <T extends WebDriver> {
 
     private static final int TIMEOUT = 10;
-    protected final WebDriver driver;
+    protected ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     protected final WebDriverWait wait;
 
     public BasePage(WebDriver driver) {
-        this.driver = driver;
+        this.driver.set(driver);
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
         initElements(driver, this);
     }
 
     public WebDriver getDriver() {
-        return driver;
+        return driver.get();
     }
 
     public void dispose() {
-        if(driver != null){
-            driver.close();
+        if(driver.get() != null){
+            driver.get().close();
         }
     }
 
@@ -47,16 +47,20 @@ public abstract class BasePage <T extends WebDriver> {
         element.sendKeys(text);
     }
 
+    protected String getTitlePage() {
+        return driver.get().getTitle();
+    }
+
     public void scrollTo(WebElement element) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+        JavascriptExecutor js = (JavascriptExecutor) driver.get();
         js.executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     public void switchToFrame(WebElement webElement) {
-        driver.switchTo().frame(webElement);
+        driver.get().switchTo().frame(webElement);
     }
 
     public void switchToFrame(String name) {
-        driver.switchTo().frame(name);
+        driver.get().switchTo().frame(name);
     }
 }
