@@ -1,4 +1,4 @@
-package co.com.training.web.config;
+package co.com.training.web.config.driver;
 
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.DesiredCapabilities;
