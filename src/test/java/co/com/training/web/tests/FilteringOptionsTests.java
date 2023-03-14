@@ -45,7 +45,7 @@ public class FilteringOptionsTests extends BaseTest{
     public void filterBy(NavigationOptions option) {
         NavigationPage navigationPage = getNavigationPage();
         navigationPage.navigateTo(option.getOption());
-       Assert.assertEquals(navigationPage.getTitlePage(),option.getTitlePage());
+       Assert.assertEquals(navigationPage.getTitle(),option.getTitlePage());
     }
 
     @Test(dataProvider = "dataFilterTable", groups = {"filteringGroup"})
