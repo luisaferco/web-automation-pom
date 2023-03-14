@@ -2,8 +2,9 @@ package co.com.training.web.tests;
 
 import co.com.training.web.config.driver.DriverManager;
 import co.com.training.web.pageobject.NavigationPage;
-import org.openqa.selenium.WebDriver;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 
 
 public abstract class BaseTest {
