@@ -1,4 +1,4 @@
-package co.com.training.web.config;
+package co.com.training.web.config.driver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.Capabilities;
@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public enum BrowserType {
 
@@ -20,7 +21,7 @@ public enum BrowserType {
 
         }
     },
-    EDGE{
+    EDGE {
         @Override
         public WebDriver createDriver(Capabilities capabilities) {
             EdgeOptions options = new EdgeOptions();
@@ -28,6 +29,14 @@ public enum BrowserType {
             WebDriverManager.edgedriver().setup();
             return new EdgeDriver(options);
         }
+    },
+    REMOTE {
+        @Override
+        public WebDriver createDriver(Capabilities capabilities) {
+
+            return new RemoteWebDriver(capabilities);
+        }
+
     };
 
 
