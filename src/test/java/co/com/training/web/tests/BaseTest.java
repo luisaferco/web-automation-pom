@@ -1,30 +1,30 @@
 package co.com.training.web.tests;
 
-import co.com.training.web.config.DriverManager;
+import co.com.training.web.config.driver.DriverManager;
 import co.com.training.web.pageobject.NavigationPage;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 
 
 public abstract class BaseTest {
 
-    public static DriverManager driverManager;
-    public static NavigationPage navigationPage;
+    private static DriverManager driverManager;
+    public NavigationPage navigationPage;
 
-    @BeforeSuite(alwaysRun = true)
+    @BeforeMethod(alwaysRun = true)
     @Parameters({"browser","url"})
-    public void beforeSuite(String browser, String url) {
+    public void beforeMethod(String browser, String url) {
         driverManager = DriverManager.newDriver(browser);
         navigationPage = new NavigationPage(driverManager.getWebDriver(url));
     }
 
-    @AfterSuite(alwaysRun = true)
-    public void afterSuite() {
+    @AfterMethod(alwaysRun = true)
+    public void afterMethod() {
         navigationPage.dispose();
     }
 
     public NavigationPage getNavigationPage() {
-        return navigationPage.refresh();
+        return navigationPage;
     }
 }

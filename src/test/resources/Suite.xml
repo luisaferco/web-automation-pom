@@ -6,7 +6,7 @@
     <listeners>
         <listener class-name="co.com.training.web.tests.MyCoolListener"/>
     </listeners>
-    <test name="My First Test">
+    <test name="Filtering Options Test">
         <groups>
             <run>
                 <include name="filteringGroup"/>

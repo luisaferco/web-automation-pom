@@ -1,9 +1,9 @@
-package co.com.training.web.config;
+package co.com.training.web.config.driver;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-public class DriverManager extends ConfigCapabilities{
+public class DriverManager extends ConfigCapabilities {
 
     private WebDriver webDriver;
 

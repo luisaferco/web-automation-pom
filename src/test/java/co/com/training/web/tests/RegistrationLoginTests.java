@@ -40,7 +40,6 @@ public class RegistrationLoginTests extends BaseTest{
     @Test(dataProvider = "login", groups = {"loginGroup"})
     public void failedUserNameRegistration(String userName, String password) {
         NavigationPage navigationPage = getNavigationPage();
-        navigationPage.slightScroll();
         LoginPage loginPage = navigationPage.navigateToRegistration();
         loginPage.loginWith(userName, password);
         Assert.assertEquals(loginPage.getAlertMessage(),"Username or password is incorrect");
@@ -50,7 +49,6 @@ public class RegistrationLoginTests extends BaseTest{
     @Test(dataProvider = "login", groups = {"loginGroup"})
     public void failedPasswordRegistration(String userName, String password) {
         NavigationPage navigationPage = getNavigationPage();
-        navigationPage.slightScroll();
         LoginPage loginPage = navigationPage.navigateToRegistration();
         loginPage.loginWith(userName, password);
         Assert.assertEquals(loginPage.getAlertMessage(),"Username or password is incorrect");
