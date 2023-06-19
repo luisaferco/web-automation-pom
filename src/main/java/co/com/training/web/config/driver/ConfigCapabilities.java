@@ -4,6 +4,8 @@ import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 public abstract class ConfigCapabilities {
@@ -24,11 +26,19 @@ public abstract class ConfigCapabilities {
                     String property = entry.getKey().toString();
                     String value = entry.getValue().toString();
                     desiredCapabilities.setCapability(property, value);
+                    if(property.equals("args")){
+                        desiredCapabilities.setCapability("args", argsToList(value));
+                    }
                 }
         );
         if(this.capabilities.isPresent()){
             desiredCapabilities.merge(capabilities.get());
         }
         return desiredCapabilities;
+    }
+
+    private List<String> argsToList(String args){
+        String[] argsArray = args.split(",");
+        return Arrays.asList(argsArray);
     }
 }
