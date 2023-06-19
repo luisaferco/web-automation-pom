@@ -21,3 +21,6 @@ jobs:
           distribution: 'temurin'
       - name: Build with Maven
         run: mvn clean
+      - name: Run tests
+        run: mvn clean verify    
+
