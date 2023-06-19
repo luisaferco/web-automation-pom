@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Training web Test Suite">
-    <parameter name="browser" value="EDGE"/>
+    <parameter name="browser" value="CHROME"/>
     <parameter name="url" value="https://www.globalsqa.com/angularjs-protractor-practice-site/"/>
     <listeners>
         <listener class-name="co.com.training.web.tests.MyCoolListener"/>
     </listeners>
-    <test name="My First Test">
+    <test name="Filtering Options Test">
         <groups>
             <run>
                 <include name="filteringGroup"/>
