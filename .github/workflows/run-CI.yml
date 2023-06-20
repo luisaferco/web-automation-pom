@@ -22,5 +22,9 @@ jobs:
       - name: Build with Maven
         run: mvn clean
       - name: Run tests
-        run: mvn clean verify    
+        run: mvn verify
+      - uses: actions/upload-artifact@v1
+        with:
+          name: TestNG Report
+          path: ./target/surefire-reports/index.html      
 
