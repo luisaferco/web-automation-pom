@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Training web Test Suite">
-    <parameter name="browser" value="CHROME"/>
+    <parameter name="config" value="suite.conf.json"/>
     <parameter name="url" value="https://www.globalsqa.com/angularjs-protractor-practice-site/"/>
     <listeners>
         <listener class-name="co.com.training.web.tests.MyCoolListener"/>
     </listeners>
-    <test name="Filtering Options Test">
-        <groups>
-            <run>
-                <include name="filteringGroup"/>
-            </run>
-        </groups>
+    <!-- Test Data at level tests-->
+    <parameter name="dataWrongUserName" value="badUser123"/>
+    <parameter name="dataWrongPassword" value="badPassword123"/>
+    <parameter name="userName" value="Conselevator"/>
+    <parameter name="password" value="123ABC"/>
+
+    <test name="Pool Test Chrome" thread-count="3" parallel="methods">
+        <parameter name="environment" value="chrome"/>
         <classes>
             <class name="co.com.training.web.tests.FilteringOptionsTests"/>
+            <class name="co.com.training.web.tests.RegistrationLoginTests"/>
         </classes>
     </test>
-    <test name="My Registration Test">
-         <parameter name="dataWrongUserName" value="badUser123"/>
-         <parameter name="dataWrongPassword" value="badPassword123"/>
-         <parameter name="userName" value="Conselevator"/>
-         <parameter name="password" value="123ABC"/>
+    <test name="Pool Test Edge" thread-count="3" parallel="methods">
+        <parameter name="environment" value="edge"/>
          <classes>
+             <class name="co.com.training.web.tests.FilteringOptionsTests"/>
              <class name="co.com.training.web.tests.RegistrationLoginTests"/>
          </classes>
      </test>
