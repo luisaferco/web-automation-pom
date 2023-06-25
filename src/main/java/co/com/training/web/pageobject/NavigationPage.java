@@ -1,6 +1,6 @@
 package co.com.training.web.pageobject;
 
-import co.com.training.web.config.custom.CustomConditions;
+import co.com.training.web.pageobject.custom.CustomConditions;
 import co.com.training.web.utils.NavigationOptions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
