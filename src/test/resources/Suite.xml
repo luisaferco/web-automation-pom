@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Training web Test Suite">
-    <parameter name="config" value="suite.conf.json"/>
+    <parameter name="conf" value="suite.conf.json"/>
     <parameter name="url" value="https://www.globalsqa.com/angularjs-protractor-practice-site/"/>
     <listeners>
         <listener class-name="co.com.training.web.tests.MyCoolListener"/>
@@ -13,14 +13,14 @@
     <parameter name="password" value="123ABC"/>
 
     <test name="Pool Test Chrome" thread-count="3" parallel="methods">
-        <parameter name="environment" value="chrome"/>
+        <parameter name="browser" value="CHROME"/>
         <classes>
             <class name="co.com.training.web.tests.FilteringOptionsTests"/>
             <class name="co.com.training.web.tests.RegistrationLoginTests"/>
         </classes>
     </test>
     <test name="Pool Test Edge" thread-count="3" parallel="methods">
-        <parameter name="environment" value="edge"/>
+        <parameter name="browser" value="EDGE"/>
          <classes>
              <class name="co.com.training.web.tests.FilteringOptionsTests"/>
              <class name="co.com.training.web.tests.RegistrationLoginTests"/>
