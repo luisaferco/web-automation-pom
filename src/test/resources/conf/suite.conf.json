@@ -15,8 +15,8 @@
     "chrome": {
       "browserName": "chrome"
     },
-    "firefox": {
-      "browserName": "firefox"
+    "edge": {
+      "browserName": "edge"
     },
     "safari": {
       "bstack:options": {
