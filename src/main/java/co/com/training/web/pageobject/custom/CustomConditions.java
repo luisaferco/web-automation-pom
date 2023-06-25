@@ -1,4 +1,4 @@
-package co.com.training.web.config.custom;
+package co.com.training.web.pageobject.custom;
 
 import co.com.training.web.exceptions.NotFoundOptionException;
 import org.openqa.selenium.WebDriver;
