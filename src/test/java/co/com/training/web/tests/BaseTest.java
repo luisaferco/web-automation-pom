@@ -16,7 +16,7 @@ import org.testng.annotations.Parameters;
 public abstract class BaseTest {
 
     private static JSONObject configValues;
-    private static DriverManager driverManager;
+    private DriverManager driverManager;
     private static EnvironmentConfig envConfig;
     public NavigationPage navigationPage;
 
