@@ -49,11 +49,8 @@ public class NavigationPage extends BasePage<WebDriver> {
 
     public void closeVignetteWindow() {
         if (isVignettePresent()){
-            wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.tagName("iframe"),1));
-            switchToFrame("aswift_1");
-            switchToFrame("ad_iframe");
-            this.click(closeButton);
-            }
+            getDriver().navigate().refresh();
+        }
     }
 
     private boolean isVignettePresent() {
