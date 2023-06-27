@@ -34,7 +34,10 @@ public class NavigationPage extends BasePage<WebDriver> {
         this.titlePage = getTitlePage();
         WebElement navOption = wait.until(CustomConditions.itemIsIncludedIn(navigationOptions, option));
         this.click(navOption);
-        closeVignetteWindow(option);
+        if (isVignettePresent()){
+            getDriver().navigate().refresh();
+            this.click(navOption);
+        }
     }
 
     public LoginPage navigateToRegistration(){
@@ -45,13 +48,6 @@ public class NavigationPage extends BasePage<WebDriver> {
     public TablePage navigateToSearchFilter(){
         navigateTo(NavigationOptions.SEARCH_FILTER.getOption());
         return new TablePage(getDriver());
-    }
-
-    public void closeVignetteWindow(String option) {
-        if (isVignettePresent()){
-            getDriver().navigate().refresh();
-            navigateTo(option);
-        }
     }
 
     private boolean isVignettePresent() {
