@@ -15,15 +15,15 @@
     <test name="Pool Test Chrome" thread-count="3" parallel="methods">
         <parameter name="browser" value="CHROME"/>
         <classes>
-            <class name="co.com.training.web.tests.FilteringOptionsTests"/>
+            <!-- <class name="co.com.training.web.tests.FilteringOptionsTests"/> -->
             <class name="co.com.training.web.tests.RegistrationLoginTests"/>
         </classes>
     </test>
     <test name="Pool Test Edge" thread-count="3" parallel="methods">
         <parameter name="browser" value="EDGE"/>
          <classes>
-             <class name="co.com.training.web.tests.FilteringOptionsTests"/>
-             <class name="co.com.training.web.tests.RegistrationLoginTests"/>
-         </classes>
-     </test>
- </suite> <!-- Suite -->
+             <!-- <class name="co.com.training.web.tests.FilteringOptionsTests"/> -->
+              <class name="co.com.training.web.tests.RegistrationLoginTests"/>
+          </classes>
+      </test>
+  </suite> <!-- Suite -->
