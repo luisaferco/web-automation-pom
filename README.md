@@ -4,10 +4,12 @@ Web Automation training project to test web, using Selenium Webdriver and TestNG
 
 Page: https://www.globalsqa.com/angularjs-protractor-practice-site/
 
- the automation project is configured to run using Suite.xml file to run the Suite by default 
- Some parameters you might configure:
- - browser  
-   - Should be set as : CHROME, EDGE,   
 
-if you want to run using selenium grid, please modify run the ParallelSuite.xml file which is configured as REMOTE browser in order tu our test cases in parallel mode.
+## Running your tests
+To run tests, run mvn test -P parallel
+To run local tests, run mvn test -P local
+To run the test suite, run mvn test -P suite
 
+
+ ## Integrate with GitHub actions
+  
