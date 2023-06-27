@@ -34,7 +34,7 @@ public class NavigationPage extends BasePage<WebDriver> {
         this.titlePage = getTitlePage();
         WebElement navOption = wait.until(CustomConditions.itemIsIncludedIn(navigationOptions, option));
         this.click(navOption);
-        closeVignetteWindow();
+        closeVignetteWindow(option);
     }
 
     public LoginPage navigateToRegistration(){
@@ -47,9 +47,10 @@ public class NavigationPage extends BasePage<WebDriver> {
         return new TablePage(getDriver());
     }
 
-    public void closeVignetteWindow() {
+    public void closeVignetteWindow(String option) {
         if (isVignettePresent()){
             getDriver().navigate().refresh();
+            navigateTo(option);
         }
     }
 
