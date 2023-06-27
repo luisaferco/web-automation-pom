@@ -1,5 +1,6 @@
 package co.com.training.web.config.env;
 
+import co.com.training.web.exceptions.NotFoundOptionException;
 import co.com.training.web.utils.maps.Adapter;
 import com.browserstack.local.Local;
 import org.json.simple.JSONObject;
@@ -51,7 +52,9 @@ public class EnvironmentConfig {
     public DesiredCapabilities setUp(String environment) {
         JSONObject envs = (JSONObject) config.get("environments");
         Map<String, Object> envCapabilities = (Map<String, Object>) envs.get(environment.toLowerCase());
-
+        if(envCapabilities == null) {
+            throw new NotFoundOptionException(String.format("environment config not found: %s",environment));
+        }
         Adapter.mapJsonToMap(envs, envCapabilities,"");
 
         DesiredCapabilities commonCapabilities = new DesiredCapabilities();

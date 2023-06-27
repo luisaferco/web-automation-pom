@@ -1,7 +1,5 @@
 {
   "server": "hub.browserstack.com",
-  "user": "luisafernandacol_EyACWR",
-  "key": "XBzgb6C2E6zB9mzAugxQ",
 
   "capabilities": {
     "bstack:options": {
@@ -17,12 +15,6 @@
     },
     "edge": {
       "browserName": "edge"
-    },
-    "safari": {
-      "bstack:options": {
-        "os": "OS X"
-      },
-      "browserName": "safari"
     }
   }
 }
