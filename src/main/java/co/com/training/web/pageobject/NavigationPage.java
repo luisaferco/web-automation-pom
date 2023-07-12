@@ -55,8 +55,7 @@ public class NavigationPage extends BasePage<WebDriver> {
         try {
            wait.until(ExpectedConditions.urlContains("#google_vignette"));
            isWindowPresent = true;
-        }catch (TimeoutException e){
-           isWindowPresent = false;
+        }catch (TimeoutException ignored){
         }
         return isWindowPresent;
     }
