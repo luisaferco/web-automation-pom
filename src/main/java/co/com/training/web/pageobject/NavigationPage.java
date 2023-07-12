@@ -36,6 +36,7 @@ public class NavigationPage extends BasePage<WebDriver> {
         this.click(navOption);
         if (isVignettePresent()){
             getDriver().navigate().refresh();
+            navOption = wait.until(CustomConditions.itemIsIncludedIn(navigationOptions, option));
             this.click(navOption);
         }
     }
