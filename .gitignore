@@ -3,4 +3,5 @@
 /target
 browserstack.err
 /target
+.vscode
 /allure-results
