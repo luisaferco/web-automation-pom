@@ -34,7 +34,11 @@ public class NavigationPage extends BasePage<WebDriver> {
         this.titlePage = getTitlePage();
         WebElement navOption = wait.until(CustomConditions.itemIsIncludedIn(navigationOptions, option));
         this.click(navOption);
-        closeVignetteWindow();
+        if (isVignettePresent()){
+            getDriver().navigate().refresh();
+            navOption = wait.until(CustomConditions.itemIsIncludedIn(navigationOptions, option));
+            this.click(navOption);
+        }
     }
 
     public LoginPage navigateToRegistration(){
@@ -47,22 +51,12 @@ public class NavigationPage extends BasePage<WebDriver> {
         return new TablePage(getDriver());
     }
 
-    public void closeVignetteWindow() {
-        if (isVignettePresent()){
-            wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.tagName("iframe"),1));
-            switchToFrame("aswift_1");
-            switchToFrame("ad_iframe");
-            this.click(closeButton);
-            }
-    }
-
     private boolean isVignettePresent() {
         boolean isWindowPresent = false;
         try {
            wait.until(ExpectedConditions.urlContains("#google_vignette"));
            isWindowPresent = true;
-        }catch (TimeoutException e){
-           isWindowPresent = false;
+        }catch (TimeoutException ignored){
         }
         return isWindowPresent;
     }

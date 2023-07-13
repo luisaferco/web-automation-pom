@@ -28,7 +28,7 @@ public abstract class BasePage <T extends WebDriver> {
 
     public void dispose() {
         if(driver.get() != null){
-            driver.get().close();
+            driver.get().quit();
         }
     }
 
