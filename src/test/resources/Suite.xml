@@ -4,7 +4,7 @@
     <parameter name="conf" value="suite.conf.json"/>
     <parameter name="url" value="https://www.globalsqa.com/angularjs-protractor-practice-site/"/>
     <listeners>
-        <listener class-name="co.com.training.web.tests.MyCoolListener"/>
+        <listener class-name="co.com.training.web.tests.TestReportListener"/>
     </listeners>
     <!-- Test Data at level tests-->
     <parameter name="dataWrongUserName" value="badUser123"/>

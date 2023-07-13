@@ -6,6 +6,7 @@ import co.com.training.web.config.env.ReadConfigFile;
 import co.com.training.web.config.env.ServerAddress;
 import co.com.training.web.pageobject.NavigationPage;
 import org.json.simple.JSONObject;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -17,6 +18,9 @@ public abstract class BaseTest {
 
     private static JSONObject configValues;
     private DriverManager driverManager;
+
+    private WebDriver driver;
+
     private static EnvironmentConfig envConfig;
     public NavigationPage navigationPage;
 
@@ -35,7 +39,8 @@ public abstract class BaseTest {
         DesiredCapabilities capabilities = envConfig.setUp(browser);
         ServerAddress address = envConfig.getServerAddress();
         driverManager = DriverManager.newDriver(browser, capabilities, address);
-        navigationPage = new NavigationPage(driverManager.getWebDriver(url));
+        driver = driverManager.getWebDriver(url);
+        navigationPage = new NavigationPage(driver);
     }
 
     @AfterMethod(alwaysRun = true)
@@ -45,5 +50,9 @@ public abstract class BaseTest {
 
     public NavigationPage getNavigationPage() {
         return navigationPage;
+    }
+
+    public WebDriver getDriver(){
+        return driver;
     }
 }

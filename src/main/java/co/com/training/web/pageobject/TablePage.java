@@ -1,5 +1,6 @@
 package co.com.training.web.pageobject;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -34,15 +35,18 @@ public class TablePage extends BasePage<WebDriver> {
         super(driver);
     }
 
+    @Step("user selects {0} type from dropdown list")
     private void selectByType(String typeName) {
         Select select = new Select(dropDownByType);
         select.selectByVisibleText(typeName);
     }
+    @Step("user selects {0} from dropdown list")
     private void selectByAccount(String accountName) {
         Select select = new Select(dropDownByAccount);
         select.selectByVisibleText(accountName);
     }
 
+    @Step("user searches by {0} account")
     public TablePage searchByAccount(String account) {
         if(isNotNullOrEmpty(account)){
             selectByAccount(account);
@@ -50,6 +54,7 @@ public class TablePage extends BasePage<WebDriver> {
         return this;
     }
 
+    @Step("user searches by {0} type")
     public TablePage searchByType(String type) {
         if(isNotNullOrEmpty(type)){
             selectByType(type);
@@ -64,6 +69,7 @@ public class TablePage extends BasePage<WebDriver> {
         return this;
     }
 
+    @Step("user see search results table")
     public List<Map<String, String>> getSearchResults() {
         List<Map<String, String>> table = new ArrayList<>();
         List<String> headers = headersTable.stream().map(WebElement::getText).collect(Collectors.toList());

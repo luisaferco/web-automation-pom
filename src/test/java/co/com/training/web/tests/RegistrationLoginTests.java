@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
@@ -13,6 +14,7 @@ import java.lang.reflect.Method;
 /**
  * Test class is to show how we can work with @DataProvider annotation using ITestContext
  */
+@Listeners({TestReportListener.class})
 public class RegistrationLoginTests extends BaseTest{
 
     @BeforeClass
@@ -37,7 +39,8 @@ public class RegistrationLoginTests extends BaseTest{
         }
     }
 
-    @Test(dataProvider = "login", groups = {"loginGroup"})
+    @Test( description = "user should not login with wrong username",
+            dataProvider = "login", groups = {"loginGroup"})
     public void failedUserNameRegistration(String userName, String password) {
         NavigationPage navigationPage = getNavigationPage();
         LoginPage loginPage = navigationPage.navigateToRegistration();
@@ -46,7 +49,8 @@ public class RegistrationLoginTests extends BaseTest{
 
     }
 
-    @Test(dataProvider = "login", groups = {"loginGroup"})
+    @Test( description = "user should not login with wrong password",
+            dataProvider = "login", groups = {"loginGroup"})
     public void failedPasswordRegistration(String userName, String password) {
         NavigationPage navigationPage = getNavigationPage();
         LoginPage loginPage = navigationPage.navigateToRegistration();

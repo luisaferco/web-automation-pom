@@ -2,6 +2,7 @@ package co.com.training.web.pageobject;
 
 import co.com.training.web.pageobject.custom.CustomConditions;
 import co.com.training.web.utils.NavigationOptions;
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -29,6 +30,7 @@ public class NavigationPage extends BasePage<WebDriver> {
     }
 
 
+    @Step("user navigate to {0} option")
     public void navigateTo(String option) {
         scrollTo(headerNavOptions);
         this.titlePage = getTitlePage();
@@ -41,11 +43,13 @@ public class NavigationPage extends BasePage<WebDriver> {
         }
     }
 
+    @Step("user navigate to registration page")
     public LoginPage navigateToRegistration(){
         navigateTo(NavigationOptions.REGISTRATION.getOption());
         return new LoginPage(getDriver());
     }
 
+    @Step("user navigate to search filter page")
     public TablePage navigateToSearchFilter(){
         navigateTo(NavigationOptions.SEARCH_FILTER.getOption());
         return new TablePage(getDriver());
@@ -61,6 +65,7 @@ public class NavigationPage extends BasePage<WebDriver> {
         return isWindowPresent;
     }
 
+    @Step("user see title page")
     public String getTitle() {
         wait.until(ExpectedConditions.not(ExpectedConditions.titleContains(titlePage)));
         return getTitlePage();

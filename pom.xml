@@ -13,8 +13,8 @@
     <slf4j.version>2.0.5</slf4j.version>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.surefire.version>3.0.0-M5</maven.surefire.version>
-    <maven.failsafe.version>3.0.0-M5</maven.failsafe.version>
+    <maven.surefire.version>3.0.0-M3</maven.surefire.version>
+    <maven.failsafe.version>3.0.0-M3</maven.failsafe.version>
     <testng.version>7.7.0</testng.version>
     <selenium.version>4.8.2</selenium.version>
     <org.aeonbits.owner.version>1.0.12</org.aeonbits.owner.version>
@@ -64,6 +64,11 @@
       <artifactId>commons-io</artifactId>
       <version>2.8.0</version>
     </dependency>
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-testng</artifactId>
+      <version>2.22.2</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -81,6 +86,10 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven.surefire.version}</version>
         <configuration>
+          <environmentVariables>
+            <BROWSERSTACK_USERNAME>{$username}</BROWSERSTACK_USERNAME>
+            <BROWSERSTACK_ACCESS_KEYZ>{$password}</BROWSERSTACK_ACCESS_KEYZ>
+          </environmentVariables>
           <suiteXmlFiles>
             <suiteXmlFile>src/test/resources/Suite.xml</suiteXmlFile>
           </suiteXmlFiles>
@@ -97,10 +106,10 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>${mvn.surefire.version}</version>
+          <version>${maven.surefire.version}</version>
           <configuration>
             <suiteXmlFiles>
-              <suiteXmlFile>>src/test/resources/Local.xml</suiteXmlFile>
+              <suiteXmlFile>src/test/resources/Local.xml</suiteXmlFile>
             </suiteXmlFiles>
           </configuration>
         </plugin>
@@ -115,7 +124,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>${mvn.surefire.version}</version>
+            <version>${maven.surefire.version}</version>
             <configuration>
               <suiteXmlFiles>
                 <suiteXmlFile>src/test/resources/ParallelSuite.xml</suiteXmlFile>
