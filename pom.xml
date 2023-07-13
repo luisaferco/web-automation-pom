@@ -15,6 +15,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.surefire.version>3.0.0-M3</maven.surefire.version>
     <maven.failsafe.version>3.0.0-M3</maven.failsafe.version>
+    <aspectj.version>1.9.6</aspectj.version>
     <testng.version>7.7.0</testng.version>
     <selenium.version>4.8.2</selenium.version>
     <org.aeonbits.owner.version>1.0.12</org.aeonbits.owner.version>
@@ -93,7 +94,17 @@
           <suiteXmlFiles>
             <suiteXmlFile>src/test/resources/Suite.xml</suiteXmlFile>
           </suiteXmlFiles>
+          <argLine> _ _
+            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+          </argLine>
         </configuration>
+        <dependencies>
+         <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+         </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
@@ -111,7 +122,17 @@
             <suiteXmlFiles>
               <suiteXmlFile>src/test/resources/Local.xml</suiteXmlFile>
             </suiteXmlFiles>
+            <argLine> _ _
+              -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+            </argLine>
           </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>org.aspectj</groupId>
+              <artifactId>aspectjweaver</artifactId>
+              <version>${aspectj.version}</version>
+            </dependency>
+          </dependencies>
         </plugin>
       </plugins>
     </build>
@@ -129,7 +150,17 @@
               <suiteXmlFiles>
                 <suiteXmlFile>src/test/resources/ParallelSuite.xml</suiteXmlFile>
               </suiteXmlFiles>
+              <argLine> _ _
+                -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+              </argLine>
             </configuration>
+            <dependencies>
+              <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
+              </dependency>
+            </dependencies>
           </plugin>
         </plugins>
       </build>
@@ -148,6 +179,13 @@
                 <suiteXmlFile>src/test/resources/Suite.xml</suiteXmlFile>
               </suiteXmlFiles>
             </configuration>
+            <dependencies>
+              <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
+              </dependency>
+            </dependencies>
           </plugin>
         </plugins>
       </build>
