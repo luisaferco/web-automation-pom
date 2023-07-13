@@ -9,13 +9,14 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <webdrivermanager.version>5.3.1</webdrivermanager.version>
+    <webdrivermanager.version>5.3.2</webdrivermanager.version>
     <slf4j.version>2.0.5</slf4j.version>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.surefire.version>3.0.0-M5</maven.surefire.version>
     <maven.failsafe.version>3.0.0-M5</maven.failsafe.version>
-    <testng.version>6.14.3</testng.version>
+    <aspectj.version>1.9.6</aspectj.version>
+    <testng.version>7.7.0</testng.version>
     <selenium.version>4.8.2</selenium.version>
     <org.aeonbits.owner.version>1.0.12</org.aeonbits.owner.version>
     <webdrivermanager.version>5.3.0</webdrivermanager.version>
@@ -64,6 +65,11 @@
       <artifactId>commons-io</artifactId>
       <version>2.8.0</version>
     </dependency>
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-testng</artifactId>
+      <version>2.22.2</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -81,9 +87,16 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven.surefire.version}</version>
         <configuration>
+          <environmentVariables>
+            <BROWSERSTACK_USERNAME>{$username}</BROWSERSTACK_USERNAME>
+            <BROWSERSTACK_ACCESS_KEYZ>{$password}</BROWSERSTACK_ACCESS_KEYZ>
+          </environmentVariables>
           <suiteXmlFiles>
             <suiteXmlFile>src/test/resources/Suite.xml</suiteXmlFile>
           </suiteXmlFiles>
+          <argLine> _ _
+            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+          </argLine>
         </configuration>
       </plugin>
     </plugins>
@@ -97,11 +110,14 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>${mvn.surefire.version}</version>
+          <version>${maven.surefire.version}</version>
           <configuration>
             <suiteXmlFiles>
-              <suiteXmlFile>>src/test/resources/Local.xml</suiteXmlFile>
+              <suiteXmlFile>src/test/resources/Local.xml</suiteXmlFile>
             </suiteXmlFiles>
+            <argLine> _ _
+              -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+            </argLine>
           </configuration>
         </plugin>
       </plugins>
@@ -115,11 +131,14 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>${mvn.surefire.version}</version>
+            <version>${maven.surefire.version}</version>
             <configuration>
               <suiteXmlFiles>
                 <suiteXmlFile>src/test/resources/ParallelSuite.xml</suiteXmlFile>
               </suiteXmlFiles>
+              <argLine> _ _
+                -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+              </argLine>
             </configuration>
           </plugin>
         </plugins>

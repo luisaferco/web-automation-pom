@@ -1,5 +1,6 @@
 package co.com.training.web.pageobject;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,12 +27,14 @@ public class LoginPage extends BasePage<WebDriver> {
         super(driver);
     }
 
+    @Step("user login with credentials username:{0} password:{1}")
     public void loginWith(String user, String password) {
         type(usernameTxt, user);
         type(passwordTxt, password);
         click(loginBtn);
     }
 
+    @Step("user see alert message")
     public String getAlertMessage() {
         return wait.until(ExpectedConditions.visibilityOf(alertMessage)).getText();
     }

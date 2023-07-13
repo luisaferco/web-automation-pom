@@ -13,6 +13,7 @@ import java.util.Map;
 
 import static java.lang.String.format;
 
+@Listeners({TestReportListener.class})
 public class FilteringOptionsTests extends BaseTest{
 
     @BeforeTest
@@ -41,14 +42,17 @@ public class FilteringOptionsTests extends BaseTest{
         return new Object[][] {{"Cash","EXPENDITURE"}};
     }
 
-    @Test(dataProvider = "dataFilteringOptions", groups = {"mainGroup", "filteringGroup"})
+    @Test( description = "navigate through modal component should redirect to intended page",
+            dataProvider = "dataFilteringOptions",
+            groups = {"mainGroup", "filteringGroup"})
     public void filterBy(NavigationOptions option) {
         NavigationPage navigationPage = getNavigationPage();
         navigationPage.navigateTo(option.getOption());
        Assert.assertEquals(navigationPage.getTitle(),option.getTitlePage());
     }
 
-    @Test(dataProvider = "dataFilterTable", groups = {"filteringGroup"})
+    @Test( description = "search by type should return filtered results",
+            dataProvider = "dataFilterTable", groups = {"filteringGroup"})
     public void navigateToTableAndSearchBy(String account, String type) {
         NavigationPage navigationPage = getNavigationPage();
         TablePage tablePage = navigationPage.navigateToSearchFilter();
