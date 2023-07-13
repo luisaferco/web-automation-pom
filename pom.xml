@@ -13,8 +13,8 @@
     <slf4j.version>2.0.5</slf4j.version>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.surefire.version>3.0.0-M3</maven.surefire.version>
-    <maven.failsafe.version>3.0.0-M3</maven.failsafe.version>
+    <maven.surefire.version>3.0.0-M5</maven.surefire.version>
+    <maven.failsafe.version>3.0.0-M5</maven.failsafe.version>
     <aspectj.version>1.9.6</aspectj.version>
     <testng.version>7.7.0</testng.version>
     <selenium.version>4.8.2</selenium.version>
