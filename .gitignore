@@ -1,4 +1,5 @@
 .idea
 *.iml
+browserstack.err
 /target
 /allure-results
