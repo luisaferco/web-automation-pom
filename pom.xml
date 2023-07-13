@@ -94,10 +94,16 @@
           <suiteXmlFiles>
             <suiteXmlFile>src/test/resources/Suite.xml</suiteXmlFile>
           </suiteXmlFiles>
-          <argLine> _ _
-            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+          <argLine> -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
           </argLine>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
@@ -115,9 +121,6 @@
             <suiteXmlFiles>
               <suiteXmlFile>src/test/resources/Local.xml</suiteXmlFile>
             </suiteXmlFiles>
-            <argLine> _ _
-              -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-            </argLine>
           </configuration>
         </plugin>
       </plugins>
@@ -136,9 +139,6 @@
               <suiteXmlFiles>
                 <suiteXmlFile>src/test/resources/ParallelSuite.xml</suiteXmlFile>
               </suiteXmlFiles>
-              <argLine> _ _
-                -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-              </argLine>
             </configuration>
           </plugin>
         </plugins>
