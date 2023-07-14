@@ -28,12 +28,36 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+
     - name: Build with Maven
       run: mvn clean
+
     - name: Run tests
       run: mvn verify -P suite
-    - name: TestNG Report
-      uses: actions/upload-artifact@v3
-      with:
-        path: ./target/surefire-reports
+      continue-on-error: true
 
+    - name: Get Allure history
+      uses: actions/checkout@v2
+      if: always()
+      continue-on-error: true
+      with:
+        ref: gh-pages
+        path: gh-pages
+
+    - name: Allure report action
+      uses: simple-elf/allure-report-action@master
+      if: always()
+      id: allure-report
+      with:
+        allure_results: build/allure-results
+        gh_pages: gh-pages
+        allure_report: allure-report
+        allure_history: allure-history    
+
+    - name: Deploy report to Github Pages
+      if: always()
+      uses: peaceiris/actions-gh-pages@v2
+      env:
+        PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: allure-history
