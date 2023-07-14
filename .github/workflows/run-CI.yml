@@ -29,11 +29,8 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
 
-    - name: Build with Maven
-      run: mvn clean
-
     - name: Run tests
-      run: mvn verify -P suite
+      run: mvn clean verify -P suite
       continue-on-error: true
 
     - name: Get Allure history
