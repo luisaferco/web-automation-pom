@@ -52,8 +52,12 @@ public class NavigationPage extends BasePage<WebDriver> {
             wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.tagName("iframe"),1));
             switchToFrame("aswift_1");
             switchToFrame("ad_iframe");
-            this.click(closeButton);
+            try{
+                this.click(closeButton);
+            }catch (Exception e){
+                getDriver().navigate().refresh();
             }
+        }
     }
 
     private boolean isVignettePresent() {
@@ -61,8 +65,7 @@ public class NavigationPage extends BasePage<WebDriver> {
         try {
            wait.until(ExpectedConditions.urlContains("#google_vignette"));
            isWindowPresent = true;
-        }catch (TimeoutException e){
-           isWindowPresent = false;
+        }catch (TimeoutException ignored){
         }
         return isWindowPresent;
     }
