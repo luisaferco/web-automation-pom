@@ -26,6 +26,7 @@ public enum BrowserType {
         @Override
         public WebDriver createDriver(Capabilities capabilities) {
             EdgeOptions options = new EdgeOptions();
+            options.addArguments("--headless");
             options.merge(capabilities);
             WebDriverManager.edgedriver().setup();
             return new EdgeDriver(options);
