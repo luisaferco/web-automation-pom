@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TablePage extends BasePage<WebDriver> {
+public class TablePage extends BasePage {
 
 
     @FindBy(id = "input1")
