@@ -3,12 +3,13 @@ package co.com.training.web.pageobject;
 import co.com.training.web.config.custom.CustomConditions;
 import co.com.training.web.utils.NavigationOptions;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
-public class NavigationPage extends BasePage<WebDriver> {
+public class NavigationPage extends BasePage{
 
     @FindBy(className = "h20")
     private WebElement headerNavOptions;
@@ -34,7 +35,12 @@ public class NavigationPage extends BasePage<WebDriver> {
         this.titlePage = getTitlePage();
         WebElement navOption = wait.until(CustomConditions.itemIsIncludedIn(navigationOptions, option));
         this.click(navOption);
-        closeVignetteWindow();
+        try {
+            closeVignetteWindow();
+        }catch (Exception e){
+            getDriver().navigate().refresh();
+            navigateTo(option);
+        }
     }
 
     public LoginPage navigateToRegistration(){
@@ -52,11 +58,8 @@ public class NavigationPage extends BasePage<WebDriver> {
             wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.tagName("iframe"),1));
             switchToFrame("aswift_1");
             switchToFrame("ad_iframe");
-            try{
-                this.click(closeButton);
-            }catch (Exception e){
-                getDriver().navigate().refresh();
-            }
+            Actions actions = new Actions(getDriver()); actions.moveToElement(closeButton);
+            this.click(closeButton);
         }
     }
 
