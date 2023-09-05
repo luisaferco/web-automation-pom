@@ -10,7 +10,7 @@ import java.time.Duration;
 
 import static org.openqa.selenium.support.PageFactory.initElements;
 
-public abstract class BasePage <T extends WebDriver> {
+public abstract class BasePage {
 
     private static final int TIMEOUT = 10;
     protected ThreadLocal<WebDriver> driver = new ThreadLocal<>();
@@ -26,19 +26,13 @@ public abstract class BasePage <T extends WebDriver> {
         return driver.get();
     }
 
-    public void dispose() {
-        if(driver.get() != null){
-            driver.get().close();
-        }
-    }
-
     /**
      *  custom click
      * @param element : WebElement
      * @author luisaferco
      */
     public void click(WebElement element) {
-        wait.until(ExpectedConditions.visibilityOf(element));
+        wait.until(ExpectedConditions.elementToBeClickable(element));
         element.click();
     }
 
