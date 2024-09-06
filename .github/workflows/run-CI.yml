@@ -23,8 +23,30 @@ jobs:
         run: mvn clean
       - name: Run tests
         run: mvn verify
-      - uses: actions/upload-artifact@v1
-        with:
-          name: TestNG Report
-          path: ./target/surefire-reports/index.html      
+
+      - name: Get Allure history
+        uses: actions/checkout@v3
+          if: always()
+          continue-on-error: true
+          with:
+            ref: gh-pages
+            path: gh-pages
+
+      - name: Allure report action
+        uses: simple-elf/allure-report-action@master
+          if: always()
+          id: allure-report
+          with:
+            allure_results: ${{ vars.ALLURE_RESULTS_PATH }}
+            gh_pages: gh-pages
+            allure_report: allure-report
+            allure_history: allure-history
+
+      - name: Deploy report to Github Pages
+          if: always()
+          uses: peaceiris/actions-gh-pages@v2
+            with:
+              github_token: ${{ secrets.GITHUB_TOKEN }}
+              publish_branch: gh-pages
+              publish_dir: allure-history
 
