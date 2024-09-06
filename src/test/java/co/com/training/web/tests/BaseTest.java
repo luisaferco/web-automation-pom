@@ -21,7 +21,7 @@ public abstract class BaseTest {
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod() {
-        navigationPage.dispose();
+        driverManager.getWebDriver().close();
     }
 
     public NavigationPage getNavigationPage() {

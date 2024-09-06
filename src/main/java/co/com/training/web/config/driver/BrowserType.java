@@ -7,6 +7,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public enum BrowserType {
@@ -26,9 +28,24 @@ public enum BrowserType {
         @Override
         public WebDriver createDriver(Capabilities capabilities) {
             EdgeOptions options = new EdgeOptions();
+            options.addArguments("--headless");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
             options.merge(capabilities);
             WebDriverManager.edgedriver().setup();
             return new EdgeDriver(options);
+        }
+    },
+    FIREFOX {
+        @Override
+        public WebDriver createDriver(Capabilities capabilities) {
+            FirefoxOptions options = new FirefoxOptions();
+            options.addArguments("--headless");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.merge(capabilities);
+            WebDriverManager.firefoxdriver().setup();
+            return new FirefoxDriver(options);
         }
     },
     REMOTE {
