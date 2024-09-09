@@ -19,7 +19,6 @@ public enum BrowserType {
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--headless");
             chromeOptions.merge(capabilities);
-            WebDriverManager.chromedriver().setup();
             return new ChromeDriver(chromeOptions);
 
         }
@@ -44,7 +43,6 @@ public enum BrowserType {
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
             options.merge(capabilities);
-            WebDriverManager.firefoxdriver().setup();
             return new FirefoxDriver(options);
         }
     },
