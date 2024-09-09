@@ -13,10 +13,10 @@ public abstract class BaseTest {
     public NavigationPage navigationPage;
 
     @BeforeMethod(alwaysRun = true)
-    @Parameters({"browser","url"})
-    public void beforeMethod(String browser, String url) {
-        String browserType = System.getenv("browserName");
-        driverManager = DriverManager.newDriver(browserType == null ? browser : browserType);
+    @Parameters({"url"})
+    public void beforeMethod(String url) {
+        String browserType = System.getProperty("browserName");
+        driverManager = DriverManager.newDriver(browserType);
         navigationPage = new NavigationPage(driverManager.getWebDriver(url));
     }
 
