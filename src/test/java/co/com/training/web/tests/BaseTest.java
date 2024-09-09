@@ -16,7 +16,7 @@ public abstract class BaseTest {
     @Parameters({"url"})
     public void beforeMethod(String url) {
         String browserType = System.getProperty("browserName");
-        driverManager = DriverManager.newDriver(browserType);
+        driverManager = DriverManager.newDriver(browserType ==null ? "CHROME" : browserType);
         navigationPage = new NavigationPage(driverManager.getWebDriver(url));
     }
 
