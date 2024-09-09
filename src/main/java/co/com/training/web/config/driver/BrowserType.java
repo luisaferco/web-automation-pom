@@ -27,7 +27,7 @@ public enum BrowserType {
         @Override
         public WebDriver createDriver(Capabilities capabilities) {
             EdgeOptions options = new EdgeOptions();
-            options.addArguments("--headless");
+           // options.addArguments("--headless");
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
             options.merge(capabilities);
