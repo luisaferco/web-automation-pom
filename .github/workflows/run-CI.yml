@@ -31,7 +31,7 @@ jobs:
       - name: Build with Maven
         run: mvn clean
       - name: Run tests
-        run: mvn -DbrowserName=${{ BROWSER_NAME }} verify
+        run: mvn -DbrowserName=$BROWSER_NAME verify
 
       - name: Get Allure history
         uses: actions/checkout@v3
