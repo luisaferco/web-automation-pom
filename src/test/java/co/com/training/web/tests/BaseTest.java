@@ -15,7 +15,8 @@ public abstract class BaseTest {
     @BeforeMethod(alwaysRun = true)
     @Parameters({"browser","url"})
     public void beforeMethod(String browser, String url) {
-        driverManager = DriverManager.newDriver(browser);
+        String browserType = System.getenv("browserName");
+        driverManager = DriverManager.newDriver(browserType == null ? browser : browserType);
         navigationPage = new NavigationPage(driverManager.getWebDriver(url));
     }
 

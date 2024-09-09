@@ -7,6 +7,12 @@ on:
   pull_request:
     branches:
       - 'main'
+  workflow_dispatch:
+    inputs:
+      browserName:
+        description: 'Browser type'
+        required: false
+        type: environment
 
 jobs:
   init:
