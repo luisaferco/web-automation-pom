@@ -11,9 +11,9 @@ on:
     inputs:
       browserName:
         description: 'Browser type'
+        default: 'CHROME'
         required: false
         type: string
-        default: 'CHROME'
 
 jobs:
   init:
@@ -26,10 +26,12 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+      - name: Set browserName
+        run: echo "BROWSER_NAME=${{ inputs.browserName || 'chrome' }}" >> $GITHUB_ENV
       - name: Build with Maven
         run: mvn clean
       - name: Run tests
-        run: mvn -DbrowserName=${{inputs.browserName}} verify
+        run: mvn -DbrowserName=${{ BROWSER_NAME }} verify
 
       - name: Get Allure history
         uses: actions/checkout@v3
