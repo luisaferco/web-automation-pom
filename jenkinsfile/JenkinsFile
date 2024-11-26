@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+
+    tools {
+        maven
+    }
+
+    stages {
+        stage('Test') {
+            git branch: 'main', url: 'https://github.com/luisaferco/web-automation-pom.git'
+
+            // To run maven
+            bat "mvn clean verify"
+        }
+    }
+
+}
