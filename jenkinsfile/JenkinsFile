@@ -13,6 +13,18 @@ pipeline {
             // To run maven
             bat "mvn clean verify"
             }
+
+            post {
+                always{
+                   allure([
+                   includeProperties: false,
+                   jdk: '',
+                   properties: [],
+                   reportBuildPolicy: 'ALWAYS',
+                   results: [[path: '*/allure-results']]
+                   ])
+                } 
+            }
         }
     }
 
