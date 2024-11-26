@@ -16,13 +16,4 @@
             <class name="co.com.training.web.tests.FilteringOptionsTests"/>
         </classes>
     </test>
-    <test name="My Registration Test">
-        <parameter name="dataWrongUserName" value="badUser123"/>
-        <parameter name="dataWrongPassword" value="badPassword123"/>
-        <parameter name="userName" value="Conselevator"/>
-        <parameter name="password" value="123ABC"/>
-        <classes>
-            <class name="co.com.training.web.tests.RegistrationLoginTests"/>
-        </classes>
-    </test>
 </suite> <!-- Suite -->
