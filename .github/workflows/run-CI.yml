@@ -36,7 +36,7 @@ jobs:
 
       - name: Get Allure history
         uses: actions/checkout@v3
-        if: always()
+        if: steps.build.outcome == 'success'
         continue-on-error: true
         with:
           ref: gh-pages
@@ -44,7 +44,7 @@ jobs:
 
       - name: Allure report action
         uses: simple-elf/allure-report-action@master
-        if: always()
+        if: steps.build.outcome == 'success'
         id: allure-report
         with:
             allure_results: ${{ vars.ALLURE_RESULTS_PATH }}
@@ -53,7 +53,7 @@ jobs:
             allure_history: allure-history
 
       - name: Deploy report to Github Pages
-        if: always()
+        if: success()
         uses: crazy-max/ghaction-github-pages@v4
         with:
           target_branch: gh-pages
