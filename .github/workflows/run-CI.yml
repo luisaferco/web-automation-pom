@@ -27,8 +27,11 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
       - name: Build with Maven
+        id: build
         run: mvn clean
+
       - name: Run tests
+        if: steps.build.outcome == 'success'
         run: mvn -DbrowserName=${{ inputs.browserName || 'CHROME' }} verify
 
       - name: Get Allure history
