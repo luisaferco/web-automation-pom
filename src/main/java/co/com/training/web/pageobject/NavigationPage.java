@@ -1,8 +1,14 @@
 package co.com.training.web.pageobject;
 
 import co.com.training.web.config.custom.CustomConditions;
+import co.com.training.web.pageobject.table.SortStrategies;
+import co.com.training.web.pageobject.table.TablePage;
 import co.com.training.web.utils.NavigationOptions;
-import org.openqa.selenium.*;
+import io.qameta.allure.Step;
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -23,6 +29,9 @@ public class NavigationPage extends BasePage{
     @FindBy(tagName = "iframe")
     private List<WebElement> frames;
 
+    @FindBy(css = "div.col-md-8.col-md-offset-2")
+    private WebElement table;
+
     private String titlePage;
 
     public NavigationPage(WebDriver driver) {
@@ -30,6 +39,7 @@ public class NavigationPage extends BasePage{
     }
 
 
+    @Step("user navigates to {0}")
     public void navigateTo(String option) {
         scrollTo(headerNavOptions);
         this.titlePage = getTitlePage();
@@ -43,16 +53,19 @@ public class NavigationPage extends BasePage{
         }
     }
 
+    @Step("user navigates to registration page")
     public LoginPage navigateToRegistration(){
         navigateTo(NavigationOptions.REGISTRATION.getOption());
         return new LoginPage(getDriver());
     }
 
+    @Step("User navigates to search filter option")
     public TablePage navigateToSearchFilter(){
         navigateTo(NavigationOptions.SEARCH_FILTER.getOption());
-        return new TablePage(getDriver());
+        return new TablePage(getDriver(), table);
     }
 
+    @Step("user closes vignette window")
     public void closeVignetteWindow() {
         if (isVignettePresent()){
             wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.tagName("iframe"),1));
@@ -73,6 +86,7 @@ public class NavigationPage extends BasePage{
         return isWindowPresent;
     }
 
+    @Step("User checks for title page")
     public String getTitle() {
         wait.until(ExpectedConditions.not(ExpectedConditions.titleContains(titlePage)));
         return getTitlePage();

@@ -17,7 +17,7 @@ public enum BrowserType {
         @Override
         public WebDriver createDriver(Capabilities capabilities) {
             ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("--headless");
+            //chromeOptions.addArguments("--headless");
             chromeOptions.merge(capabilities);
             return new ChromeDriver(chromeOptions);
 

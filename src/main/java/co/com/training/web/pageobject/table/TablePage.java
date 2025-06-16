@@ -1,6 +1,8 @@
-package co.com.training.web.pageobject;
+package co.com.training.web.pageobject.table;
 
+import co.com.training.web.pageobject.BasePage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,6 +10,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class TablePage extends BasePage {
 
@@ -24,14 +27,26 @@ public class TablePage extends BasePage {
     @FindBy(id = "input4")
     private  WebElement ExpenditurePayeesInput;
 
-    @FindBy(css = "div.col-md-8.col-md-offset-2 table thead tr th")
+    @FindBy(css = "thead tr th")
     private List<WebElement> headersTable;
 
-    @FindBy(css = "div.col-md-8.col-md-offset-2 table tbody tr")
+    @FindBy(css = "tbody tr")
     private WebElement rowTable;
 
-    public TablePage(WebDriver driver) {
+    private final WebElement table;
+
+    private final SortStrategy<WebElement> sortStrategy;
+
+    public TablePage(WebDriver driver, WebElement table, SortStrategy<WebElement> sortStrategy) {
         super(driver);
+        this.table = table.findElement(By.tagName("table"));
+        this.sortStrategy = sortStrategy;
+    }
+    public TablePage(WebDriver driver, WebElement table) {
+        super(driver);
+        this.table = table.findElement(By.tagName("table"));
+        this.sortStrategy = SortStrategies.dataTablesStrategy();
+
     }
 
     private void selectByType(String typeName) {
@@ -79,6 +94,19 @@ public class TablePage extends BasePage {
         }
         return table;
     }
+
+    public TablePage sorTableBy(String headerName, SortOrder targetOrder) {
+        WebElement headerFound = headersTable.stream()
+                .filter(header -> header.getText().contains(headerName))
+                        .findFirst().orElseThrow(() -> new NotFoundException(String.format("header with name '%s' does not exist", headerName)));
+        if (!sortStrategy.test(headerFound)) {
+            throw new UnsupportedOperationException("Column " + headerName + " is not sortable");
+        }
+        IntStream.iterate(0,click -> click < sortStrategy.getClicksNeeded(headerFound,targetOrder), click -> click +1)
+                        .forEach(click -> click(headerFound));
+        return this;
+    }
+
 
     private boolean isNotNullOrEmpty(String str){
        return str != null && !str.trim().isEmpty();
