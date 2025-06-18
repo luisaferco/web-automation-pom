@@ -45,7 +45,7 @@ public class TablePage extends BasePage {
     public TablePage(WebDriver driver, WebElement table) {
         super(driver);
         this.table = table.findElement(By.tagName("table"));
-        this.sortStrategy = SortStrategies.dataTablesStrategy();
+        this.sortStrategy = SortStrategies.dataSortStrategy();
 
     }
 
