@@ -10,12 +10,12 @@
 
   <properties>
     <slf4j.version>2.0.5</slf4j.version>
-    <maven.compiler.target>17</maven.compiler.target>
-    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
     <maven.surefire.version>3.3.1</maven.surefire.version>
     <maven.failsafe.version>3.3.1</maven.failsafe.version>
     <testng.version>6.14.3</testng.version>
-    <selenium.version>4.23.1</selenium.version>
+    <selenium.version>4.3.0</selenium.version>
     <org.aeonbits.owner.version>1.0.12</org.aeonbits.owner.version>
     <webdrivermanager.version>5.9.2</webdrivermanager.version>
   </properties>
@@ -24,6 +24,11 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
+      <version>${selenium.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-devtools-v102</artifactId>
       <version>${selenium.version}</version>
     </dependency>
     <dependency>
