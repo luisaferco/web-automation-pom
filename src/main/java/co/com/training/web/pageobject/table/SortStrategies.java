@@ -9,7 +9,7 @@ public class SortStrategies {
     }
 
     public static SortStrategy<WebElement> dataSortStrategy() {
-        return new SortStrategy<WebElement>() {
+        return new SortStrategy<>() {
             @Override
             public boolean isSortable(String className) {
                 return className.contains("sortable") ||
