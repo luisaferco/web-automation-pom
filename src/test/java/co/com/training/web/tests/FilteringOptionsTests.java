@@ -2,9 +2,9 @@ package co.com.training.web.tests;
 
 import co.com.training.web.pageobject.NavigationPage;
 import co.com.training.web.utils.NavigationOptions;
+import io.qameta.allure.AllureId;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
-import io.qameta.allure.TmsLink;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
@@ -46,7 +46,7 @@ public class FilteringOptionsTests extends BaseTest{
     }
 
     @Description("Validate navigation to multiple options")
-    @TmsLink("TMS-123")
+    @AllureId("TMS-123")
     @Test(dataProvider = "dataFilteringOptions", groups = {"mainGroup", "filteringGroup"})
     public void filterBy(NavigationOptions option) throws IOException {
         NavigationPage navigationPage = getNavigationPage();
