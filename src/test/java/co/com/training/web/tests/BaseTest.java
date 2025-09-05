@@ -3,6 +3,7 @@ package co.com.training.web.tests;
 import co.com.training.web.config.driver.DriverManager;
 import co.com.training.web.pageobject.NavigationPage;
 import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
 import org.testng.annotations.*;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ public abstract class BaseTest {
 
     @BeforeMethod(alwaysRun = true)
     @Parameters({"url"})
+    @Step("user navigates to {url}")
     public void openPage(String url) {
         navigationPage = new NavigationPage(driverManager.getWebDriver(url));
     }

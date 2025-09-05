@@ -2,6 +2,8 @@ package co.com.training.web.tests;
 
 import co.com.training.web.pageobject.LoginPage;
 import co.com.training.web.pageobject.NavigationPage;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
@@ -38,6 +40,7 @@ public class RegistrationLoginTests extends BaseTest{
     }
 
     @Test(dataProvider = "login", groups = {"loginGroup"})
+    @Severity(SeverityLevel.CRITICAL)
     public void failedUserNameRegistration(String userName, String password) {
         NavigationPage navigationPage = getNavigationPage();
         LoginPage loginPage = navigationPage.navigateToRegistration();
@@ -47,6 +50,7 @@ public class RegistrationLoginTests extends BaseTest{
     }
 
     @Test(dataProvider = "login", groups = {"loginGroup"})
+    @Severity(SeverityLevel.CRITICAL)
     public void failedPasswordRegistration(String userName, String password) {
         NavigationPage navigationPage = getNavigationPage();
         LoginPage loginPage = navigationPage.navigateToRegistration();
