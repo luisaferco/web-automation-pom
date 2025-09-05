@@ -39,7 +39,7 @@ public class NavigationPage extends BasePage{
     }
 
 
-    @Step("user navigates to {0}")
+    @Step("user navigates to {option}")
     public void navigateTo(String option) {
         scrollTo(headerNavOptions);
         this.titlePage = getTitlePage();

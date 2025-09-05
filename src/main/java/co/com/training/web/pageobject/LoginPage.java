@@ -1,5 +1,6 @@
 package co.com.training.web.pageobject;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,6 +27,7 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
+    @Step("User attempts to login with username: {username} and password: {password}")
     public void loginWith(String user, String password) {
         type(usernameTxt, user);
         type(passwordTxt, password);
