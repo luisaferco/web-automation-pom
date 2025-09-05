@@ -77,7 +77,6 @@
         <configuration>
           <suiteXmlFiles>
             <suiteXmlFile>src/test/resources/Suite.xml</suiteXmlFile>
-            <suiteXmlFile>src/test/resources/ParallelSuite.xml</suiteXmlFile>
           </suiteXmlFiles>
         </configuration>
       </plugin>
