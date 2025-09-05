@@ -21,6 +21,7 @@ if you want to run using selenium grid, please modify run the ParallelSuite.xml 
 
 ### Generate report
 1. For a quick local view, this command generates a temporary report and automatically starts a local web server to display it in your default web browser.
+Open a Git Bash console:
 
 ```
 allure serve
