@@ -2,6 +2,8 @@ package co.com.training.web.tests;
 
 import co.com.training.web.pageobject.LoginPage;
 import co.com.training.web.pageobject.NavigationPage;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
@@ -15,6 +17,8 @@ import java.lang.reflect.Method;
 /**
  * Test class is to show how we can work with @DataProvider annotation using ITestContext
  */
+@Epic("User Management")
+@Feature("Login Functionality")
 public class RegistrationLoginTests extends BaseTest{
 
     @BeforeClass
