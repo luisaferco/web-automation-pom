@@ -27,7 +27,7 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
-    @Step("User attempts to login with username: {username} and password: {password}")
+    @Step("User attempts to login with username: {user} and password: {password}")
     public void loginWith(String user, String password) {
         type(usernameTxt, user);
         type(passwordTxt, password);
