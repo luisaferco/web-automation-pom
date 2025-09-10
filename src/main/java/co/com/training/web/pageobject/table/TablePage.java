@@ -32,7 +32,7 @@ public class TablePage extends BasePage {
     private List<WebElement> headersTable;
 
     @FindBy(css = "tbody tr")
-    private WebElement rowTable;
+    private  List<WebElement> rowsTable;
 
     private final WebElement table;
 
@@ -84,15 +84,14 @@ public class TablePage extends BasePage {
     public List<Map<String, String>> getSearchResults() {
         List<Map<String, String>> table = new ArrayList<>();
         List<String> headers = headersTable.stream().map(WebElement::getText).collect(Collectors.toList());
-        int numberRows = rowTable.findElements(By.cssSelector("tr")).size();
-        for(int row = 1; row <= numberRows; row++) {
+        for(int row = 1; row <= rowsTable.size(); row++) {
             Iterator<String> iterator = headers.iterator();
+            Map<String, String> register = new HashMap<>();
             for (int column = 1 ; column <= headers.size(); column++) {
-                Map<String, String> register = new HashMap<>();
-                WebElement item = rowTable.findElement(By.cssSelector(String.format("tr:nth-child(%s) td:nth-child(%s)", row, column)));
+                WebElement item = rowsTable.get(row - 1).findElement(By.cssSelector(String.format("tr:nth-child(%s) td:nth-child(%s)", row, column)));
                 register.put(iterator.next(),item.getText());
-                table.add(register);
             }
+            table.add(register);
         }
         return table;
     }
