@@ -51,7 +51,7 @@ jobs:
         if: steps.build.outcome == 'success'
         id: allure-report
         with:
-            allure_results: ${{ vars.ALLURE_RESULTS_PATH }}
+            allure_results: target/allure-results
             gh_pages: gh-pages
             allure_report: allure-report
             allure_history: allure-history
