@@ -5,11 +5,10 @@ import co.com.training.web.utils.NavigationOptions;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
-import org.testng.Assert;
+import org.assertj.core.api.Assertions;
+import org.assertj.core.groups.Tuple;
 import org.testng.annotations.*;
-import org.testng.asserts.SoftAssert;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -48,10 +47,11 @@ public class FilteringOptionsTests extends BaseTest{
     @Description("Validate navigation to multiple options")
     @AllureId("TMS-123")
     @Test(dataProvider = "dataFilteringOptions", groups = {"mainGroup", "filteringGroup"})
-    public void filterBy(NavigationOptions option) throws IOException {
+    public void filterBy(NavigationOptions option) {
         NavigationPage navigationPage = getNavigationPage();
         navigationPage.navigateTo(option.getOption());
-        Assert.assertEquals(navigationPage.getTitle(),option.getTitlePage());
+        Assertions.assertThat(navigationPage.getTitle()).as(String.format("should navigate to %s", option.getOption()))
+                .isEqualTo(option.getTitlePage());
     }
 
     @Test(dataProvider = "dataFilterTable", groups = {"filteringGroup"})
@@ -62,13 +62,10 @@ public class FilteringOptionsTests extends BaseTest{
                       .searchByAccount(account)
                       .searchByType(type)
                       .getSearchResults();
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(searchResults.stream().allMatch(row -> row.get("Type").equals(type)),
-                format("Expected all search results filtered by type \"%s\" ",type));
 
-        softAssert.assertTrue(searchResults.stream().allMatch(row -> row.get("Account").equals(account)),
-                format("Expected all search results filtered by type \"%s\" ", account));
-
-        softAssert.assertAll();
+        Assertions.assertThat(searchResults)
+                .as(format("Expected all search results filtered by type '%s' and account '%s' ",type, account))
+                        .extracting("Type","Account")
+                                .contains(Tuple.tuple(type,account));
     }
 }

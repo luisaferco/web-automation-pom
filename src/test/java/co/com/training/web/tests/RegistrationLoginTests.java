@@ -6,7 +6,7 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.testng.Assert;
+import org.assertj.core.api.Assertions;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -49,7 +49,8 @@ public class RegistrationLoginTests extends BaseTest{
         NavigationPage navigationPage = getNavigationPage();
         LoginPage loginPage = navigationPage.navigateToRegistration();
         loginPage.loginWith(userName, password);
-        Assert.assertEquals(loginPage.getAlertMessage(),"Username or password is incorrect");
+        Assertions.assertThat(loginPage.getAlertMessage()).as("Should appear error authentication message")
+                        .isEqualTo("Username or password is incorrect");
 
     }
 
@@ -59,7 +60,8 @@ public class RegistrationLoginTests extends BaseTest{
         NavigationPage navigationPage = getNavigationPage();
         LoginPage loginPage = navigationPage.navigateToRegistration();
         loginPage.loginWith(userName, password);
-        Assert.assertEquals(loginPage.getAlertMessage(),"Username or password is incorrect");
+        Assertions.assertThat(loginPage.getAlertMessage()).as("Should appear error authentication message")
+                .isEqualTo("Username or password is incorrect");
     }
 
 

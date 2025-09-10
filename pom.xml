@@ -16,10 +16,21 @@
     <maven.failsafe.version>3.3.1</maven.failsafe.version>
     <testng.version>6.14.3</testng.version>
     <selenium.version>4.3.0</selenium.version>
+    <allure.version>2.24.0</allure.version>
     <org.aeonbits.owner.version>1.0.12</org.aeonbits.owner.version>
     <webdrivermanager.version>5.9.2</webdrivermanager.version>
   </properties>
-
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-bom</artifactId>
+        <version>${allure.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
@@ -43,6 +54,17 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>3.27.3</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-assertj</artifactId>
+      <version>${allure.version}</version>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.13.2</version>
@@ -51,7 +73,8 @@
     <dependency>
       <groupId>io.qameta.allure</groupId>
       <artifactId>allure-testng</artifactId>
-      <version>2.22.2</version>
+      <version>${allure.version}</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
@@ -70,17 +93,6 @@
           <target>${maven.compiler.target}</target>
         </configuration>
       </plugin>
-      <!--   <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>${maven.surefire.version}</version>
-          <configuration>
-            <suiteXmlFiles>
-              <suiteXmlFile>src/test/resources/Suite.xml</suiteXmlFile>
-            </suiteXmlFiles>
-          </configuration>
-        </plugin> -->
-
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
