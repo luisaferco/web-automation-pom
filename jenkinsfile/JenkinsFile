@@ -2,21 +2,21 @@ pipeline {
     agent any
 
     tools {
-        maven "M3"
+        maven 'M3'
     }
 
     stages {
         stage('Test') {
             steps {
-            git branch: 'main', url: 'https://github.com/luisaferco/web-automation-pom.git'
+                git branch: 'main', url: 'https://github.com/luisaferco/web-automation-pom.git'
 
-            // To run maven
-            bat "mvn clean verify"
+                // To run maven
+                bat 'mvn clean verify'
             }
 
             post {
-                always{
-                   allure([
+                always {
+                    allure([
                    includeProperties: false,
                    jdk: '',
                    properties: [],
@@ -27,5 +27,4 @@ pipeline {
             }
         }
     }
-
 }

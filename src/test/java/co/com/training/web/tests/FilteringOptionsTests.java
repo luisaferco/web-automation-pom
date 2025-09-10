@@ -1,11 +1,13 @@
 package co.com.training.web.tests;
 
 import co.com.training.web.pageobject.NavigationPage;
-import co.com.training.web.pageobject.TablePage;
 import co.com.training.web.utils.NavigationOptions;
-import org.testng.Assert;
+import io.qameta.allure.AllureId;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import org.assertj.core.api.Assertions;
+import org.assertj.core.groups.Tuple;
 import org.testng.annotations.*;
-import org.testng.asserts.SoftAssert;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.Map;
 
 import static java.lang.String.format;
 
+@Feature("Filtering options page")
 public class FilteringOptionsTests extends BaseTest{
 
     @BeforeTest
@@ -41,27 +44,28 @@ public class FilteringOptionsTests extends BaseTest{
         return new Object[][] {{"Cash","EXPENDITURE"}};
     }
 
+    @Description("Validate navigation to multiple options")
+    @AllureId("TMS-123")
     @Test(dataProvider = "dataFilteringOptions", groups = {"mainGroup", "filteringGroup"})
     public void filterBy(NavigationOptions option) {
         NavigationPage navigationPage = getNavigationPage();
         navigationPage.navigateTo(option.getOption());
-       Assert.assertEquals(navigationPage.getTitle(),option.getTitlePage());
+        Assertions.assertThat(navigationPage.getTitle()).as(String.format("should navigate to %s", option.getOption()))
+                .isEqualTo(option.getTitlePage());
     }
 
     @Test(dataProvider = "dataFilterTable", groups = {"filteringGroup"})
     public void navigateToTableAndSearchBy(String account, String type) {
         NavigationPage navigationPage = getNavigationPage();
-        TablePage tablePage = navigationPage.navigateToSearchFilter();
-        List<Map<String, String>> searchResults = tablePage.searchByAccount(account)
-                                                            .searchByType(type)
-                                                            .getSearchResults();
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(searchResults.stream().allMatch(row -> row.get("Type").equals(type)),
-                format("Expected all search results filtered by type \"%s\" ",type));
+        List<Map<String, String>> searchResults = navigationPage
+                .navigateToSearchFilter()
+                      .searchByAccount(account)
+                      .searchByType(type)
+                      .getSearchResults();
 
-        softAssert.assertTrue(searchResults.stream().allMatch(row -> row.get("Account").equals(account)),
-                format("Expected all search results filtered by type \"%s\" ", account));
-
-        softAssert.assertAll();
+        Assertions.assertThat(searchResults)
+                .as(format("Expected all search results filtered by type '%s' and account '%s' ",type, account))
+                        .extracting("Type","Account")
+                                .contains(Tuple.tuple(type,account));
     }
 }

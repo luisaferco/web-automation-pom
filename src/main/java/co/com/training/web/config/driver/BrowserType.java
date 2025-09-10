@@ -17,8 +17,11 @@ public enum BrowserType {
         @Override
         public WebDriver createDriver(Capabilities capabilities) {
             ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("--headless");
+            boolean isRemote = Boolean.parseBoolean(capabilities.getCapability("remote").toString());
+            chromeOptions.setHeadless(isRemote);
+            chromeOptions.addArguments("--remote-allow-origins=*");
             chromeOptions.merge(capabilities);
+            WebDriverManager.chromedriver().setup();
             return new ChromeDriver(chromeOptions);
 
         }
@@ -27,7 +30,8 @@ public enum BrowserType {
         @Override
         public WebDriver createDriver(Capabilities capabilities) {
             EdgeOptions options = new EdgeOptions();
-            options.addArguments("--headless");
+            boolean isRemote = Boolean.parseBoolean(capabilities.getCapability("remote").toString());
+            options.setHeadless(isRemote);
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
             options.merge(capabilities);
@@ -39,10 +43,12 @@ public enum BrowserType {
         @Override
         public WebDriver createDriver(Capabilities capabilities) {
             FirefoxOptions options = new FirefoxOptions();
-            options.addArguments("--headless");
+            boolean isRemote = Boolean.parseBoolean(capabilities.getCapability("remote").toString());
+            options.setHeadless(isRemote);
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
             options.merge(capabilities);
+            WebDriverManager.firefoxdriver().setup();
             return new FirefoxDriver(options);
         }
     },

@@ -5,3 +5,4 @@ browserstack.err
 /target
 .vscode
 /allure-results
+/allure-report

@@ -2,7 +2,11 @@ package co.com.training.web.tests;
 
 import co.com.training.web.pageobject.LoginPage;
 import co.com.training.web.pageobject.NavigationPage;
-import org.testng.Assert;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import org.assertj.core.api.Assertions;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -13,6 +17,8 @@ import java.lang.reflect.Method;
 /**
  * Test class is to show how we can work with @DataProvider annotation using ITestContext
  */
+@Epic("User Management")
+@Feature("Login Functionality")
 public class RegistrationLoginTests extends BaseTest{
 
     @BeforeClass
@@ -38,20 +44,24 @@ public class RegistrationLoginTests extends BaseTest{
     }
 
     @Test(dataProvider = "login", groups = {"loginGroup"})
+    @Severity(SeverityLevel.CRITICAL)
     public void failedUserNameRegistration(String userName, String password) {
         NavigationPage navigationPage = getNavigationPage();
         LoginPage loginPage = navigationPage.navigateToRegistration();
         loginPage.loginWith(userName, password);
-        Assert.assertEquals(loginPage.getAlertMessage(),"Username or password is incorrect");
+        Assertions.assertThat(loginPage.getAlertMessage()).as("Should appear error authentication message")
+                        .isEqualTo("Username or password is incorrect");
 
     }
 
     @Test(dataProvider = "login", groups = {"loginGroup"})
+    @Severity(SeverityLevel.CRITICAL)
     public void failedPasswordRegistration(String userName, String password) {
         NavigationPage navigationPage = getNavigationPage();
         LoginPage loginPage = navigationPage.navigateToRegistration();
         loginPage.loginWith(userName, password);
-        Assert.assertEquals(loginPage.getAlertMessage(),"Username or password is incorrect");
+        Assertions.assertThat(loginPage.getAlertMessage()).as("Should appear error authentication message")
+                .isEqualTo("Username or password is incorrect");
     }
 
 

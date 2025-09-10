@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import static org.openqa.selenium.support.PageFactory.initElements;
 
@@ -56,5 +58,37 @@ public abstract class BasePage {
 
     public void switchToFrame(String name) {
         driver.get().switchTo().frame(name);
+    }
+
+    /**
+     * Método genérico para realizar acciones hasta que se cumpla una condición
+     * @param element Elemento sobre el cual realizar la acción
+     * @param condition Condición que debe cumplirse
+     * @param action Acción a realizar si la condición no se cumple
+     */
+    protected void waitAndActUntilCondition(
+            WebElement element,
+            Supplier<Boolean> condition,
+            Consumer<WebElement> action) {
+        wait.until(driver -> {
+            if (condition.get()) {
+                return true;
+            }
+            action.accept(element);
+            return false;
+        });
+    }
+
+    // Sobrecarga para casos donde no necesitamos el WebElement en la acción
+    protected void waitAndActUntilCondition(
+            Supplier<Boolean> condition,
+            Runnable action) {
+        wait.until(driver -> {
+            if (condition.get()) {
+                return true;
+            }
+            action.run();
+            return false;
+        });
     }
 }
