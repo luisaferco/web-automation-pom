@@ -4,6 +4,13 @@ on:
   push:
     branches:
       - 'main'
+  workflow_dispatch:
+    inputs:
+      browserName:
+        description: 'Browseer Type'
+        default: 'CHROME'
+        required: false
+        type: string
 
 jobs:
   build:
@@ -23,4 +30,4 @@ jobs:
         run: mvn clean install
 
       - name: Run tests
-        run: mvn -DbrowserName=CHROME test
+        run: mvn -DbrowserName=${{github.event.inputs.browserName || 'EDGE' }} test
