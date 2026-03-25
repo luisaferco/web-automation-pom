@@ -30,7 +30,7 @@ jobs:
         run: mvn clean install
 
       - name: Run tests
-        run: mvn -DbrowserName=${{github.event.inputs.browserName || 'EDGE' }} test
+        run: mvn -DbrowserName=${{github.event.inputs.browserName || 'CHROME' }} test
 
       - name: Get Allure history
         uses: actions/checkout@v3
