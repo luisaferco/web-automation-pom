@@ -3,19 +3,26 @@ name: CI Pipeline
 on:
   push:
     branches:
-      - 'main'
+      - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       browserName:
-        description: 'Browseer Type'
-        default: 'CHROME'
+        description: Browser type
+        default: CHROME
         required: false
-        type: string
+        type: choice
+        options:
+          - CHROME
+          - FIREFOX
+          - EDGE
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,37 +31,55 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '11'
-          distribution: 'temurin'
+          distribution: temurin
+          cache: maven
 
-      - name: Clean Install Maven
-        run: mvn clean install
+      - name: Resolve browser for this run
+        id: browser
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "name=${{ inputs.browserName }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=CHROME" >> "$GITHUB_OUTPUT"
+          fi
 
-      - name: Run tests
-        run: mvn -DbrowserName=${{github.event.inputs.browserName || 'CHROME' }} test
+      - name: Install Microsoft Edge (Linux)
+        if: ${{ steps.browser.outputs.name == 'EDGE' }}
+        run: |
+          set -euxo pipefail
+          curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+          sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
+          sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge.list'
+          rm microsoft.gpg
+          sudo apt-get update
+          sudo apt-get install -y microsoft-edge-stable
+          microsoft-edge --version
+
+      - name: Build and run tests
+        run: mvn -B clean test -DbrowserName=${{ steps.browser.outputs.name }}
 
       - name: Get Allure history
-        uses: actions/checkout@v3
-        if: steps.build.outcome == 'success'
+        if: always()
         continue-on-error: true
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: gh-pages
 
       - name: Generate Allure Report
+        if: always()
         uses: simple-elf/allure-report-action@master
-        if: steps.build.outcome == 'success'
-        id: allure-report
         with:
-            allure_results: target/allure-results
-            gh_pages: gh-pages
-            allure_report: allure-report
-            allure_history: allure-history
+          allure_results: target/allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
 
-      - name: Deploy report to Github Pages
+      - name: Deploy report to GitHub Pages
         if: always()
         uses: crazy-max/ghaction-github-pages@v4
         with:
           target_branch: gh-pages
           build_dir: allure-history
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
