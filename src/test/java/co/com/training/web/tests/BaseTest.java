@@ -4,11 +4,12 @@ import co.com.training.web.config.driver.DriverManager;
 import co.com.training.web.pageobject.NavigationPage;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
-import org.testng.annotations.*;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Parameters;
 
 
 public abstract class BaseTest {
@@ -38,8 +39,8 @@ public abstract class BaseTest {
         return navigationPage;
     }
     @Attachment(value = "screenshot", type = "image/png", fileExtension = ".png")
-    public byte[] attachScreenshotPNG(String feature) throws IOException {
-        return Files.readAllBytes(Paths.get(String.format("/%s/to/image.png", feature)));
+    public byte[] attachScreenshotPNG() {
+        return ((TakesScreenshot) driverManager.getWebDriver()).getScreenshotAs(OutputType.BYTES);
     }
 
 }
