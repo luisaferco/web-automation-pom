@@ -50,6 +50,7 @@ public class FilteringOptionsTests extends BaseTest{
     public void filterBy(NavigationOptions option) {
         NavigationPage navigationPage = getNavigationPage();
         navigationPage.navigateTo(option.getOption());
+        attachScreenshotPNG();
         Assertions.assertThat(navigationPage.getTitle()).as(String.format("should navigate to %s", option.getOption()))
                 .isEqualTo(option.getTitlePage());
     }
